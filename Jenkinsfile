@@ -51,7 +51,7 @@
     stage ('Deploy-To-Tomcat') {
             steps {
            sshagent(['tomcat']) {
-                sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@65.2.3.90:/prod/apache-tomcat-9.0.65/webapps/flyseum.war'
+                sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@3.109.58.229:/prod/apache-tomcat-9.0.65/webapps/flyseum.war'
               }      
            }       
     }
@@ -60,7 +60,7 @@
     stage ('DAST') {
       steps {
         sshagent(['zap']) {
-         sh 'ssh -o  StrictHostKeyChecking=no ubuntu@13.232.171.52 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://65.2.3.90:8080/flyseum/" || true'
+         sh 'ssh -o  StrictHostKeyChecking=no ubuntu@15.206.80.247 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://3.109.58.229:8080/flyseum/" || true'
         }
       }
     }
