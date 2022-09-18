@@ -60,7 +60,7 @@
     stage ('DAST') {
       steps {
         sshagent(['zap']) {
-         sh 'ssh -o  StrictHostKeyChecking=no ubuntu@65.0.125.237 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://43.204.227.150:8080/flyseum/" || true'
+         sh 'ssh -o  StrictHostKeyChecking=no ubuntu@3.110.169.208 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://43.204.227.150:8080/flyseum/" || true'
         }
       }
     }
