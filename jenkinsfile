@@ -1,0 +1,18 @@
+pipeline{
+ agent any
+  tools{
+    maven 'Maven'
+  }
+stages{
+ stage('snyk') {
+      steps {
+        echo 'Testing...'
+        snykSecurity(
+          snykInstallation: 'snyk',
+          snykTokenId: 'snyk',
+          failOnIssues:'false'
+          )
+       }
+     }
+}
+}
