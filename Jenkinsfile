@@ -41,6 +41,17 @@
         }
       }
     }
+   
+    stage('snyk') {
+      steps {
+        echo 'Testing...'
+        snykSecurity(
+          snykInstallation: 'snyk',
+          snykTokenId: 'snyk',
+          failOnIssues:'false'
+          )
+       }
+     }
     
     stage ('Build') {
       steps {
@@ -51,7 +62,7 @@
     stage ('Deploy-To-Tomcat') {
             steps {
            sshagent(['tomcat']) {
-                sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@3.111.171.49:/prod/apache-tomcat-9.0.65/webapps/flyseum.war'
+                sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@13.233.247.202:/prod/apache-tomcat-9.0.65/webapps/flyseum.war'
               }      
            }       
     }
@@ -60,7 +71,7 @@
     stage ('DAST') {
       steps {
         sshagent(['zap']) {
-         sh 'ssh -o  StrictHostKeyChecking=no ubuntu@43.205.210.37 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://3.111.171.49:8080/flyseum/" || true'
+         sh 'ssh -o  StrictHostKeyChecking=no ubuntu@3.111.197.78 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://13.233.247.202:8080/flyseum/" || true'
         }
       }
     }
