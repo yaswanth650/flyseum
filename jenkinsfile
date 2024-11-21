@@ -4,15 +4,15 @@ pipeline{
     maven 'Maven'
   }
 stages{
- stage('snyk') {
+ stage('OWASP Dependency-Check Vulnerabilities') {
       steps {
-        echo 'Testing...'
-        snykSecurity(
-          snykInstallation: 'snyk',
-          snykTokenId: 'snyk',
-          failOnIssues:'false'
-          )
-       }
-     }
+        dependencyCheck additionalArguments: ''' 
+                    -o './'
+                    -s './'
+                    -f 'ALL' 
+                    --prettyPrint''', odcInstallation: 'dependency-check'
+           dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+      }
+    }
 }
 }
